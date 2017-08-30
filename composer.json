@@ -1,0 +1,18 @@
+{
+  "name": "zanphp/hessian-lite",
+  "type": "library",
+  "description": "hessian lite",
+  "require": {
+    "php": ">=5.6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ZanPHP\\HessianLite\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}
