@@ -726,7 +726,6 @@ class Parser
     private function getObject($type)
     {
         if (!class_exists($type)) {
-            echo "Type $type cannot be found for object instantiation, check your type mappings\n";
             $obj = new stdClass();
             $obj->__type = $type;
             return $obj;
