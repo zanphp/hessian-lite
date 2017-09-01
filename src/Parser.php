@@ -649,7 +649,9 @@ class Parser
     //-- map
     function untypedMap($code, $num)
     {
-        $map = array();
+        $map = [];
+        $map2 = new \SplObjectStorage();
+
         $this->refmap->incReference();
         $this->refmap->objectlist[] = &$map;
         $code = $this->read();
@@ -664,17 +666,33 @@ class Parser
                 $value = $this->refmap->objectlist[$value->index];
             }
 
-            $map[$key] = $value;
-            if ($code != 'Z')
+            if (is_object($key) || is_array($key)) {
+                $map2->attach((object)$key, $value);
+            } else {
+                $map[$key] = $value;
+            }
+
+            if ($code != 'Z') {
                 $code = $this->read();
+            }
         }
-        return $map;
+
+        if ($map2->count()) {
+            foreach ($map as $key => $value) {
+                $map2->attach((object)$key, $value);
+            }
+            return $map2;
+        } else {
+            return $map;
+        }
     }
 
     private function typedMap($code, $num)
     {
         $type = $this->parseType();
-        $map = array();
+        $map = [];
+        $map2 = new \SplObjectStorage();
+
         $this->refmap->incReference();
         $this->refmap->objectlist[] = &$map;
         // TODO references and objects
@@ -690,11 +708,25 @@ class Parser
                 $value = $this->refmap->objectlist[$value->index];
             }
 
-            $map[$key] = $value;
-            if ($code != 'Z')
+            if (is_object($key) || is_array($key)) {
+                $map2->attach((object)$key, $value);
+            } else {
+                $map[$key] = $value;
+            }
+
+            if ($code != 'Z') {
                 $code = $this->read();
+            }
         }
-        return $map;
+
+        if ($map2->count()) {
+            foreach ($map as $key => $value) {
+                $map2->attach((object)$key, $value);
+            }
+            return $map2;
+        } else {
+            return $map;
+        }
     }
 
     //-- object
