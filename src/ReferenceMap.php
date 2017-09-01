@@ -39,6 +39,8 @@ class ReferenceMap
 
     public function getReference($object)
     {
+        // 屏蔽引用功能: method([1,2], [1,2]) 会被序列化成引用, 因为 [1,2] === [1,2], 实际上不应该序列化成引用
+        return false;
         return array_search($object, $this->objectlist, true);
     }
 
