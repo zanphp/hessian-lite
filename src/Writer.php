@@ -115,7 +115,10 @@ class Writer
          */
 
         $total = count($array);
-        if (Utils::isListFormula($array)) {
+
+        // FIXBUG Utils::isListFormula($array) 这方法无法判断 ["key" => "value"] map 类型
+        // 修改为更简单的 isListKeys
+        if (Utils::isListKeys($array)) {
             $this->refmap->objectlist[] = &$array;
             $stream = '';
             if ($total <= 7) {
