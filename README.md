@@ -10,6 +10,33 @@
 4. 屏蔽引用功能: ReferenceMap::getReference 永远返回false, method([1,2], [1,2]) 会被序列化成引用, 因为 [1,2] === [1,2], 实际上不一定是引用
 5. 修改buffer实现
 
+
+### BUG4 detail
+
+```text
+
+String testWrapperClassArray(Boolean[] tBooleans, Byte[] tBytes , 
+    Character[] tChars, Short[] tShorts, Integer[] tInts, Long[] tLongs, Float[] tFloats, Double[] tDoubles);
+
+$args = [
+    new JavaValue("java.lang.Boolean[]", [true, false]),
+    new JavaValue("java.lang.Byte[]", [1,2]),
+    new JavaValue("java.lang.Character[]", ['a', 'b']),
+    new JavaValue("java.lang.Short[]", [1,2]),
+    new JavaValue("java.lang.Integer[]", [1,2]),
+    new JavaValue("java.lang.Long[]", [1,2]),
+    new JavaValue("java.lang.Float[]", [3.14,3.14]),
+    new JavaValue("java.lang.Double[]", [3.14,3.14]),
+];
+
+java.lang.Long[]
+java.lang.Integer[]
+java.lang.Short[]
+官方默认的实现都会引用到 java.lang.Byte[]
+
+```
+
+
 ## TODO
 
 1. buffer 修改成 swoole_buffer 实现, 如有必要
