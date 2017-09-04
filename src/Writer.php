@@ -142,6 +142,10 @@ class Writer
         if (empty($map))
             return 'N';
 
+        if (isset($map["__type"])) {
+            return $this->writeObject((object)$map);
+        }
+
         /*
         ::= 'M' type (value value)* 'Z'  # key, value map pairs
        ::= 'H' (value value)* 'Z'	   # untyped key, value
