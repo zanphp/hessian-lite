@@ -43,8 +43,7 @@ class IteratorWriter
                 $stream = 'H';
             }
 
-            // ???
-            foreach ($elements as $key => $value) {
+            foreach ($list as $key => $value) {
                 $stream .= $writer->writeValue($key);
                 $stream .= $writer->writeValue($value);
             }
